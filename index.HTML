@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <title>성현월드</title>
+<meta charset="utf-8">
+</head>
+<body>
+
+
+<h1><a href="https://goodstock18.tistory.com/" target="_blank" title="성현 블로그"> 성현 월드</a> </h1>
+<hr> <!--#줄긋기태그-->
+<ol>
+    
+    <li><a href="한국.html">한국</a> <br></li>
+    <li><a href="미국.html">미국</a> <br></li>
+    <li><a href="프랑스.html">프랑스</a> <br></li>
+</ol>
+
+<p = style = "margin: 20px;"><h2>안녕 내이름은 성현</h2>
+<h3>앞으로 여기에 무슨일이 벌어질지 너무 궁금하다. <br>
+트래픽을 통한 광고 수익을 얻고싶다. <br>
+
+<table>
+  <thead>
+    <tr>
+      <th>배당일</th>
+      <th>배당금</th>
+    </tr>
+  </thead>
+  <tbody id="dividend-history"></tbody>
+</table>
+
+<script>
+  fetch('https://cors-anywhere.herokuapp.com/https://www.nasdaq.com/market-activity/funds-and-etfs/qyld/dividend-history')
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const html = parser.parseFromString(data, 'text/html');
+      const rows = html.querySelectorAll('.historical-data__table tbody tr');
+      let htmlString = '';
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const date = cells[0].textContent.trim();
+        const amount = cells[1].textContent.trim();
+        htmlString += `<tr><td>${date}</td><td>${amount}</td></tr>`;
+      });
+      document.getElementById('dividend-history').innerHTML = htmlString;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
+
+
+
+</h3>
+
+<img src="해변.jpg" width = "10%">
+</p>
+</body>
+</html>
